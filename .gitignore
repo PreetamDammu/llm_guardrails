@@ -1,0 +1,6 @@
+__pycache__
+logs
+outputs
+outputs_backup
+outputs_backup2
+.env
