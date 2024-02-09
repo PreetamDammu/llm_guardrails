@@ -6,9 +6,14 @@ Steps to run LLMs locally.
 1) Create a new conda environment to install dependencies
 #conda create -n fc_env python=3.9
 2) Install Requirements
-# pip install requirements
+# pip install -r requirements.txt
 3) Follow instructions to install FastChat
 #pip3 install "fschat[model_worker,webui]"
+
+Note: Specify a cache location for huggingface if you are running out of space in root directory
+export HF_HOME=/home/azureuser/cloudfiles/code/Users/socialcompuw/huggingface_models/
+export TRANSFORMERS_CACHE=/home/azureuser/cloudfiles/code/Users/socialcompuw/huggingface_models/
+
 4) Steps for FastChat LLM model local run
     a) Start the serve controller
     # python3 -m fastchat.serve.controller &
