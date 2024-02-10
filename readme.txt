@@ -5,10 +5,12 @@ Driver Version: 535.129.03   CUDA Version: 12.2
 Steps to run LLMs locally.
 1) Create a new conda environment to install dependencies
 #conda create -n fc_env python=3.9
-2) Install Requirements
-# pip install -r requirements.txt
-3) Follow instructions to install FastChat
+
+2) Follow instructions to install FastChat (https://github.com/lm-sys/FastChat)
 #pip3 install "fschat[model_worker,webui]"
+
+3) Install Requirements
+# pip install -r requirements.txt
 
 Note: Specify a cache location for huggingface if you are running out of space in root directory
 export HF_HOME=/home/azureuser/cloudfiles/code/Users/socialcompuw/huggingface_models/
