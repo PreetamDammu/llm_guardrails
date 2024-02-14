@@ -1,2 +1,5 @@
 openai==1.12.0
+convokit==3.0.0
+detoxify==0.5.2
+seaborn==0.13.2
 python-dotenv
