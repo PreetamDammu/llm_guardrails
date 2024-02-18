@@ -10,7 +10,9 @@ Steps to run LLMs locally.
 # conda activate fc_env
 
 2) Follow instructions to install FastChat (https://github.com/lm-sys/FastChat)
-#pip3 install "fschat[model_worker,webui]"
+# pip3 install "fschat[model_worker,webui]"
+
+Cloning the git repo (link: )
 
 3) Install Requirements
 # pip install -r requirements.txt
