@@ -18,13 +18,10 @@ def query_openai_model(model_name, prompt):
 
     return response.choices[0].message.content
 
-def query_evaluator_openai_model(client, model_name, system, prompt, temperature=0):
+def query_evaluator_openai_model(client, model_name, prompt, temperature=0):
     response = client.chat.completions.create(
         model=model_name, # model = "deployment_name".
-        messages=[
-            {"role": "system", "content": f"{system}"},
-            {"role": "user", "content": f"{prompt}"}
-        ],
+        messages=prompt, 
         temperature=temperature,  # Control the randomness of the output
         response_format={"type": "json_object"}  # Ensure output is in JSON format
     )
