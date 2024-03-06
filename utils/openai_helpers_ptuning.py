@@ -6,6 +6,18 @@ secrets = dotenv_values(".env")
 personal_api_key = secrets['AZURE_OPENAI_KEY']
 azure_endpoint = secrets['AZURE_OPENAI_ENDPOINT']
 
+client = AzureOpenAI(
+    azure_endpoint = azure_endpoint, 
+    api_key=personal_api_key,  
+    api_version="2024-02-15-preview"
+    )
+
+# client = AzureOpenAI(
+#   azure_endpoint = "https://socialcomp.openai.azure.com/", 
+#   api_key=personal_api_key,  
+#   api_version="2024-02-15-preview"
+# )
+
 def query_openai_model(model_name, prompt):
     response = client.chat.completions.create(
         model=model_name, # model = "deployment_name".
@@ -18,10 +30,13 @@ def query_openai_model(model_name, prompt):
 
     return response.choices[0].message.content
 
-def query_evaluator_openai_model(client, model_name, prompt, temperature=0):
+def query_evaluator_openai_model(model_name, prompt, temperature=0):
     response = client.chat.completions.create(
         model=model_name, # model = "deployment_name".
-        messages=prompt, 
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": f"{prompt}"}
+        ], 
         temperature=temperature,  # Control the randomness of the output
         response_format={"type": "json_object"}  # Ensure output is in JSON format
     )
