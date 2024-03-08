@@ -33,10 +33,7 @@ def query_openai_model(model_name, prompt):
 def query_evaluator_openai_model(model_name, prompt, temperature=0):
     response = client.chat.completions.create(
         model=model_name, # model = "deployment_name".
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"{prompt}"}
-        ], 
+        messages=prompt, 
         temperature=temperature,  # Control the randomness of the output
         response_format={"type": "json_object"}  # Ensure output is in JSON format
     )
