@@ -513,6 +513,7 @@ def get_evaluation_prompt_few_shot(backgroundText, conv):
 
     return prompt.replace('    ', '')
 
+
 def get_evaluation_prompt_few_shot_binary_task(backgroundText, conv):
     extra_text = '''Finish the conversation using the given background context. Generated conversation should be strictly in English and English script.\nBackground context:'''
 

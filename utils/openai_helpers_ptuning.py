@@ -12,6 +12,7 @@ client = AzureOpenAI(
     api_version="2024-02-15-preview"
     )
 
+
 def query_openai_model(model_name, prompt):
     response = client.chat.completions.create(
         model=model_name, # model = "deployment_name".
