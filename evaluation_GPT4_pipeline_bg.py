@@ -143,7 +143,7 @@ def run_evaluation(original_df_size, dict_prompts, model_name, temperature, file
 evaluation_file_name = "outputs/conv_db_eight_models_combined.csv"
 df_evaluation = pd.read_csv(evaluation_file_name)
 
-df_evaluation = df_evaluation[:20]
+# df_evaluation = df_evaluation[:20]
 
 # do not change parameters
 temperature = 0.2
