@@ -108,7 +108,7 @@ def run_evaluation(original_df_size, dict_prompts, model_name, temperature, file
         
         return index, json_response, total_token, num_completion_tokens, num_prompt_tokens
 
-    num_threads = 10     
+         
 
     # Use ThreadPoolExecutor to issue parallel calls
     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
@@ -171,6 +171,10 @@ for i, row in df_evaluation.iterrows():
 
 # this list is used to keep track of intermediate evaluation results
 list_evaluated = [""] * len(dict_prompts)
+
+num_threads = 5
+print(f'Running with {num_threads}...')
+write_to_log(f'Running with {num_threads}...', log_file_name)
 run_evaluation(len(dict_prompts), dict_prompts, model_name, temperature, file_name, log_file_name, list_evaluated)
 
 
