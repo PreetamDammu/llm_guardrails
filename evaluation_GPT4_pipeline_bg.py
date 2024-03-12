@@ -41,11 +41,11 @@ def write_to_log(text, file_name):
 def save_intermediate_results(aggregate_json_dict, df_mapping, model_name, file_name, log_file_name, usage, prompt_usage, completion_tokens):
     list_evaluated = {index: json.dumps(json_response) for index, json_response in aggregate_json_dict.items()}
     save_to_csv(df_mapping, model_name, list_evaluated, file_name, temp=True)
-    print(f'Saved Intermediate [{len(list_evaluated)}/{len(df_mapping)}]')
+    # print(f'Saved Intermediate [{len(list_evaluated)}/{len(df_mapping)}]')
     write_to_log(f'Saved Intermediate [{len(list_evaluated)}/{len(df_mapping)}]', log_file_name)
-    print("Total Token Usage: " + str(usage))
-    print("Total Prompt Token Usage: " + str(prompt_usage))
-    print("Total Completion Token Usage: " + str(completion_tokens))
+    # print("Total Token Usage: " + str(usage))
+    # print("Total Prompt Token Usage: " + str(prompt_usage))
+    # print("Total Completion Token Usage: " + str(completion_tokens))
 
     write_to_log("Total Token Usage: " + str(usage), log_file_name)
     write_to_log("Total Prompt Token Usage: " + str(prompt_usage), log_file_name)
@@ -84,7 +84,14 @@ def run_evaluation(original_df_size, dict_prompts, model_name, temperature, file
         total_token = num_completion_tokens = num_prompt_tokens = 0
         
         # sometimes, the safety guardrail prevents generation
+        attempt = 0
         while (response == ""):
+            attempt = attempt + 1
+
+            if attempt>3:
+                write_to_log(f"Failed to generate response for index: {index}", log_file_name)
+                return index, 'failed to generate response', total_token, num_completion_tokens, num_prompt_tokens
+
             response, total_token, num_completion_tokens, num_prompt_tokens = get_response(model_name, prompt, temperature)
             
             response = response.choices[0].message.content if response else ""
@@ -96,6 +103,8 @@ def run_evaluation(original_df_size, dict_prompts, model_name, temperature, file
                     json_response = json.loads(response)
                 except:
                     response = ""
+
+                
         
         return index, json_response, total_token, num_completion_tokens, num_prompt_tokens
 
