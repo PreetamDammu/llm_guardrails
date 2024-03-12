@@ -60,7 +60,7 @@ def get_response(model_name, prompt, temperature):
                 temperature=temperature,  # Control the randomness of the output
                 response_format={"type": "json_object"}  # Ensure output is in JSON format
             )
-            print(response)
+            # print(response)
             num_tokens += response.usage.total_tokens
             num_completion_tokens += response.usage.completion_tokens
             num_prompt_tokens += response.usage.prompt_tokens
