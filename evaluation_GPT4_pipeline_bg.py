@@ -173,8 +173,8 @@ for i, row in df_evaluation.iterrows():
 list_evaluated = [""] * len(dict_prompts)
 
 num_threads = 5
-print(f'Running with {num_threads}...')
-write_to_log(f'Running with {num_threads}...', log_file_name)
+print(f'Running with {num_threads} threads...')
+write_to_log(f'Running with {num_threads} threads...', log_file_name)
 run_evaluation(len(dict_prompts), dict_prompts, model_name, temperature, file_name, log_file_name, list_evaluated)
 
 

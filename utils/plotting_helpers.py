@@ -1,6 +1,49 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
+import scipy.stats as stats
 
+
+def run_significance(df, metrics):
+    models = list(set(df['model'].to_list()))
+    p_values_summary = []
+
+    for model in models:
+        model_metric_data = df[(df['model'] == model)]
+        for metric in metrics:
+            
+            caste_scores = model_metric_data[model_metric_data['concept'] == 'caste'][metric]
+            race_scores = model_metric_data[model_metric_data['concept'] == 'race'][metric]
+            
+            # Conduct a Mann-Whitney U test (non-parametric) since we cannot assume normal distribution of scores
+            stat, p_value = stats.mannwhitneyu(caste_scores, race_scores, alternative='two-sided')
+            
+            p_values_summary.append({'Model': model, 'Metric': metric, 'P-Value': p_value})
+
+    p_values_df = pd.DataFrame(p_values_summary)
+    p_values_df['Significance'] = ['Significant' if p < 0.05 else 'Not Significant' for p in p_values_df['P-Value']]
+
+    # wide_format_df = p_values_df.pivot('Model', 'Metric', 'P-Value')
+    # formatted_df = wide_format_df.applymap(lambda x: f"**{x:.2e}**" if x < 0.05 else f"{x:.3f}")
+
+
+    return p_values_df
+
+
+
+def bar_plots(metrics, score_data):
+
+    fig, axes = plt.subplots(len(metrics), 1, figsize=(10, 20))
+
+    for i, metric in enumerate(metrics):
+        sns.barplot(x=metric, y='model', hue='concept', data=score_data, ax=axes[i], palette="muted")
+        axes[i].set_title(metric)
+        axes[i].set_xlabel('Score')
+        axes[i].set_xlim(0, 3)  
+        axes[i].set_ylabel('')
+
+    plt.tight_layout()
+    plt.show()
 
 def plot_average_scores_by_concept(data, concepts=None):
 
