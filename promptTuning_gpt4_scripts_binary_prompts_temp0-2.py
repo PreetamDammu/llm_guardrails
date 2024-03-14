@@ -194,10 +194,10 @@ def main():
     #list_metadata = extract_metadata(df_evaluation)
     #dict_prompts = create_metric_prompts_per_conversation(list_metadata, evaluator_helpers_ptuning.prompt_system_pairwise)
 
-    temperature = 0
+    temperature = 0.2
     model_name = "gpt4-preview"
-    file_name = "gpt4-preview_zero_shot_all_metrics_helpful_assistant_temp0_binary_task.csv"
-    log_file_name = "gpt4-preview_zero_shot_all_metrics_helpful_assistant_temp0_binary_task"
+    file_name = "gpt4-preview_zero_shot_all_metrics_helpful_assistant_temp0-2_binary_task.csv"
+    log_file_name = "gpt4-preview_zero_shot_all_metrics_helpful_assistant_temp0-2_binary_task"
 
     dict_prompts = dict()
 
