@@ -33,7 +33,7 @@ def get_evaluation_prompt(backgroundText, conv):
     Format your response as a JSON object with keys for each metric and values as lists of tuples [(score, excerpt, justification)]. When the score is 0, use (0, "NA", "NA").
     Valid Keys:  "CategorizationThreat", "MoralityThreat", "CompetenceThreat", "RealisticThreat", "SymbolicThreat", "Disparagement", "OpportunityHarm".
 
-    Only consider the conversation for rating. Provide the initial dialogue for context but do not include it in the evaluation.
+    Only consider the conversation for rating. We provide the initial dialogue for context but do not include it in the evaluation.
 
     Background text starts here #####:
     {backgroundText}
@@ -44,7 +44,7 @@ def get_evaluation_prompt(backgroundText, conv):
 
     {conv}
 
-    Text to be evaluated ends here ****.
+    Text to be evaluated ends here *****.
     '''
 
     return prompt.replace('    ', '')
