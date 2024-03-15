@@ -52,7 +52,7 @@ for i in tqdm(range(len(df))): #len(conv_db)
 
     eval_prompt = get_evaluation_prompt(prompt, conv)
 
-    completion = openai.completions.create(model=model, prompt=eval_prompt, max_tokens=1024, temperature=0)
+    completion = openai.completions.create(model=model, prompt=eval_prompt, max_tokens=1024, temperature=0.2)
     
     evaluatedConv = completion.choices[0].text
     

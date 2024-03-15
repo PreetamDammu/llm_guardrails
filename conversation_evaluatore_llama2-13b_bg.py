@@ -12,7 +12,7 @@ import openai
 openai.api_key = "EMPTY"
 openai.base_url = "http://localhost:8000/v1/"
 
-model = "vicuna-13b-v1.5"
+model = "Llama-2-13b-chat-hf"
 fname = 'conv_db_eight_models_combined_TestSplit'
 
 df = pd.read_csv(f'outputs/{fname}.csv')
@@ -52,7 +52,7 @@ for i in tqdm(range(len(df))): #len(conv_db)
 
     eval_prompt = get_evaluation_prompt(prompt, conv)
 
-    completion = openai.completions.create(model=model, prompt=eval_prompt, max_tokens=1024, temperature=0)
+    completion = openai.completions.create(model=model, prompt=eval_prompt, max_tokens=1024, temperature=0.2)
     
     evaluatedConv = completion.choices[0].text
     
