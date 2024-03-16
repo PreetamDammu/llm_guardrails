@@ -31,7 +31,7 @@ def run_significance(df, metrics):
 
 
 
-def bar_plots(metrics, score_data):
+def bar_plots(metrics, score_data, x_min=0, x_max=3):
 
     fig, axes = plt.subplots(len(metrics), 1, figsize=(10, 20))
 
@@ -39,7 +39,7 @@ def bar_plots(metrics, score_data):
         sns.barplot(x=metric, y='model', hue='concept', data=score_data, ax=axes[i], palette="muted")
         axes[i].set_title(metric)
         axes[i].set_xlabel('Score')
-        axes[i].set_xlim(0, 3)  
+        axes[i].set_xlim(x_min, x_max)  
         axes[i].set_ylabel('')
 
     plt.tight_layout()
