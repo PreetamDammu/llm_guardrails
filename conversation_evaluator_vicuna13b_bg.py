@@ -5,7 +5,7 @@ import pandas as pd
 import random
 random.seed(42)
 
-from utils.evaluator_helpers import get_evaluation_prompt
+from utils.evaluator_helpers import get_evaluation_prompt_finetuning
 
 import openai
 
@@ -50,7 +50,7 @@ for i in tqdm(range(len(df))): #len(conv_db)
     prompt = df.iloc[i]['prompt']
     conv = df.iloc[i]['generated_text']
 
-    eval_prompt = get_evaluation_prompt(prompt, conv)
+    eval_prompt = get_evaluation_prompt_finetuning(prompt, conv)
 
     completion = openai.completions.create(model=model, prompt=eval_prompt, max_tokens=1024, temperature=0.2)
     
