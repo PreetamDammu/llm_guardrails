@@ -95,3 +95,35 @@ def plot_boxplots_grid(data, metrics=None, concepts=None, cols=3):
         plt.tight_layout(pad=3.0)  
 
     plt.show()
+
+
+def plot_heatmaps(df, models, threats, concepts):
+
+    global_min = float('inf')
+    global_max = float('-inf')
+    
+
+    for concept in concepts:
+        df_concept = df[df['concept'] == concept]
+        for model in models:
+            model_scores = df_concept[df_concept['model'] == model][threats].mean()
+            global_min = min(global_min, model_scores.min())
+            global_max = max(global_max, model_scores.max())
+    
+    for concept in concepts:
+        df_concept = df[df['concept'] == concept]
+        threat_scores_concept = pd.DataFrame(columns=threats)
+        
+        for model in models:
+            model_scores = df_concept[df_concept['model'] == model][threats].mean()
+            new_row = pd.DataFrame(model_scores.values.reshape(1, -1), columns=threats, index=[model])
+            threat_scores_concept = pd.concat([threat_scores_concept, new_row])
+        
+        plt.figure(figsize=(14, 8))
+        sns.heatmap(threat_scores_concept, annot=True, fmt=".2f", cmap='coolwarm', vmin=global_min, vmax=global_max, linewidths=.5)
+        plt.title(f'Mean Threat Scores by Model for Concept: {concept}')
+        plt.ylabel('Models')
+        plt.xlabel('Threat Types')
+        plt.show()
+
+    return
