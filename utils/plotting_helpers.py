@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import scipy.stats as stats
+import matplotlib
 
 
 def run_significance(df, metrics):
@@ -44,6 +45,92 @@ def bar_plots(metrics, score_data, x_min=0, x_max=3):
 
     plt.tight_layout()
     plt.show()
+
+def optimized_bar_plots(metrics, score_data, x_min=0, x_max=3):
+
+    model_order = ['gpt4-preview', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
+                'Llama-2-7b-chat-hf', 'vicuna-13b-v1.5', 'Llama-2-13b-chat-hf']
+    score_data = score_data.set_index('model').loc[model_order].reset_index()
+
+    sns.set(font_scale=1.35)
+    matplotlib.rc('xtick', labelsize='small')
+    matplotlib.rc('ytick', labelsize='small')
+
+
+    n_rows = len(metrics)
+    
+
+    fig, axes = plt.subplots(n_rows, 1, figsize=(10, 2 * n_rows), sharex=True)
+    
+
+    for i, metric in enumerate(metrics):
+
+        sns.barplot(x=metric, y='model', hue='concept', data=score_data, ax=axes[i], palette="muted", order=model_order)
+        axes[i].set_title(metric)
+        axes[i].set_xlim(x_min, x_max)
+        
+        # Remove the axis labels
+        axes[i].set_xlabel('')
+        axes[i].set_ylabel('')
+
+        if i < n_rows - 1:
+            axes[i].legend([],[], frameon=False)
+
+        axes[i].grid(which='major', linestyle='--', linewidth='0.5', color='grey')
+    
+
+    
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_heatmaps_comb(df, threats, concepts):
+    models = ['gpt4-preview', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
+                'Llama-2-7b-chat-hf', 'vicuna-13b-v1.5', 'Llama-2-13b-chat-hf']
+
+    global_min = float('inf')
+    global_max = float('-inf')
+    
+
+    for concept in concepts:
+        df_concept = df[df['concept'] == concept]
+        for model in models:
+            model_scores = df_concept[df_concept['model'] == model][threats].mean()
+            global_min = min(global_min, model_scores.min())
+            global_max = max(global_max, model_scores.max())
+    
+
+    sns.set(font_scale=1.2)
+
+
+    fig, axes = plt.subplots(1, len(concepts), figsize=(7, 3), sharey=True, gridspec_kw={'wspace':0.02, 'hspace':0}) #len(models)*0.25 + 1
+    
+    
+    for i, concept in enumerate(concepts):
+        df_concept = df[df['concept'] == concept]
+        threat_scores_concept = pd.DataFrame(columns=threats)
+        
+        for model in models:
+            model_scores = df_concept[df_concept['model'] == model][threats].mean()
+            new_row = pd.DataFrame(model_scores.values.reshape(1, -1), columns=threats, index=[model])
+            threat_scores_concept = pd.concat([threat_scores_concept, new_row])
+        
+        sns.heatmap(threat_scores_concept, annot=True, fmt=".2f", cmap='coolwarm', vmin=global_min, vmax=global_max, linewidths=.5, ax=axes[i], annot_kws={"size": 10}, cbar=False)
+        axes[i].set_title(f'{concept.capitalize()}')
+        axes[i].tick_params(axis='x')#, rotation=45)
+        # axes[i].set_xlabel('Threat Types')
+    
+    # axes[0].set_ylabel('Models')
+    
+
+    cbar_ax = fig.add_axes([0.02, -0.45, 0.02, 0.6])  # x, y, width, height
+    fig.colorbar(axes[0].collections[0], cax=cbar_ax, orientation="vertical")
+
+    plt.subplots_adjust(bottom=0.2)
+
+    plt.show()
+
+    return
 
 def plot_average_scores_by_concept(data, concepts=None):
 
@@ -125,5 +212,34 @@ def plot_heatmaps(df, models, threats, concepts):
         plt.ylabel('Models')
         plt.xlabel('Threat Types')
         plt.show()
+
+    return
+
+
+def plot_heatmaps(df, models, threats, concepts):
+    # Remove the y-axis label and place the color bar beneath the heatmaps
+
+    # Create a new figure with adjusted size for better fit
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8), sharey=True, gridspec_kw={'width_ratios': [len(race_agg.columns), len(caste_agg.columns)]})
+
+    # Create the race heatmap
+    sns.heatmap(race_agg, annot=True, fmt=".2f", cmap='coolwarm', cbar=False, norm=norm, ax=ax1, annot_kws={"size": 14})
+    ax1.set_title('Race')
+    ax1.set_xticklabels(threat_types, rotation=45, ha='right')
+
+    # Create the caste heatmap
+    sns.heatmap(caste_agg, annot=True, fmt=".2f", cmap='coolwarm', cbar=False, norm=norm, ax=ax2, annot_kws={"size": 14})
+    ax2.set_title('Caste')
+    ax2.set_xticklabels(threat_types, rotation=45, ha='right')
+
+    # Add a color bar at the bottom of the heatmaps
+    cbar_ax = fig.add_axes([0.15, -0.15, 0.7, 0.02])  # x, y, width, height
+    fig.colorbar(ax1.collections[0], cax=cbar_ax, orientation="horizontal")
+
+    # Adjust layout to accommodate the new color bar position
+    plt.subplots_adjust(bottom=0.2)
+
+    # Show the plot
+    plt.show()
 
     return
