@@ -1,0 +1,57 @@
+,Model,Metric,P-Value,Significance
+0,gpt4-preview,CategorizationThreat,0.5685554488748059,Not Significant
+1,gpt4-preview,MoralityThreat,1.0,Not Significant
+2,gpt4-preview,CompetenceThreat,1.0,Not Significant
+3,gpt4-preview,RealisticThreat,1.0,Not Significant
+4,gpt4-preview,SymbolicThreat,0.32956025996062066,Not Significant
+5,gpt4-preview,Disparagement,1.0,Not Significant
+6,gpt4-preview,OpportunityHarm,0.32956025996062066,Not Significant
+7,vicuna-7b-v1.5,CategorizationThreat,4.67371716640755e-05,Significant
+8,vicuna-7b-v1.5,MoralityThreat,0.0006313644448018135,Significant
+9,vicuna-7b-v1.5,CompetenceThreat,0.9764065938074717,Not Significant
+10,vicuna-7b-v1.5,RealisticThreat,0.0012673969331755178,Significant
+11,vicuna-7b-v1.5,SymbolicThreat,8.338136767879223e-05,Significant
+12,vicuna-7b-v1.5,Disparagement,0.01587678690747451,Significant
+13,vicuna-7b-v1.5,OpportunityHarm,2.929361005876719e-05,Significant
+14,Llama-2-13b-chat-hf,CategorizationThreat,5.626559170983151e-07,Significant
+15,Llama-2-13b-chat-hf,MoralityThreat,2.037458613005012e-10,Significant
+16,Llama-2-13b-chat-hf,CompetenceThreat,0.003354046225290631,Significant
+17,Llama-2-13b-chat-hf,RealisticThreat,1.5279357441210833e-05,Significant
+18,Llama-2-13b-chat-hf,SymbolicThreat,5.266585839313498e-08,Significant
+19,Llama-2-13b-chat-hf,Disparagement,8.451856113798495e-08,Significant
+20,Llama-2-13b-chat-hf,OpportunityHarm,2.7481023297181623e-06,Significant
+21,Orca-2-7b,CategorizationThreat,0.004929000145611486,Significant
+22,Orca-2-7b,MoralityThreat,0.003142201590349973,Significant
+23,Orca-2-7b,CompetenceThreat,0.45995595838600334,Not Significant
+24,Orca-2-7b,RealisticThreat,0.0016132879047837285,Significant
+25,Orca-2-7b,SymbolicThreat,2.272116558837974e-05,Significant
+26,Orca-2-7b,Disparagement,0.08464953986240492,Not Significant
+27,Orca-2-7b,OpportunityHarm,0.005796788443488728,Significant
+28,Llama-2-7b-chat-hf,CategorizationThreat,1.7149140013790344e-05,Significant
+29,Llama-2-7b-chat-hf,MoralityThreat,2.0182470695590707e-05,Significant
+30,Llama-2-7b-chat-hf,CompetenceThreat,0.42106550876683413,Not Significant
+31,Llama-2-7b-chat-hf,RealisticThreat,0.03153723446884232,Significant
+32,Llama-2-7b-chat-hf,SymbolicThreat,0.0006182886161512605,Significant
+33,Llama-2-7b-chat-hf,Disparagement,1.7589970912250026e-05,Significant
+34,Llama-2-7b-chat-hf,OpportunityHarm,9.698108778645844e-05,Significant
+35,vicuna-13b-v1.5,CategorizationThreat,8.543060522547581e-07,Significant
+36,vicuna-13b-v1.5,MoralityThreat,6.070455528791846e-06,Significant
+37,vicuna-13b-v1.5,CompetenceThreat,0.09713007484317897,Not Significant
+38,vicuna-13b-v1.5,RealisticThreat,0.0014132970650095225,Significant
+39,vicuna-13b-v1.5,SymbolicThreat,1.2226888207295785e-06,Significant
+40,vicuna-13b-v1.5,Disparagement,7.081542719197003e-07,Significant
+41,vicuna-13b-v1.5,OpportunityHarm,4.91327462958996e-06,Significant
+42,mpt-7b-chat,CategorizationThreat,0.00048228183830639033,Significant
+43,mpt-7b-chat,MoralityThreat,0.008090502502882879,Significant
+44,mpt-7b-chat,CompetenceThreat,0.10227034864029677,Not Significant
+45,mpt-7b-chat,RealisticThreat,0.04313225048390605,Significant
+46,mpt-7b-chat,SymbolicThreat,0.01177988541168303,Significant
+47,mpt-7b-chat,Disparagement,0.0005749564800104659,Significant
+48,mpt-7b-chat,OpportunityHarm,0.05009101147293068,Not Significant
+49,gpt-3.5-turbo,CategorizationThreat,0.022404032554737458,Significant
+50,gpt-3.5-turbo,MoralityThreat,1.0,Not Significant
+51,gpt-3.5-turbo,CompetenceThreat,0.32956025996062066,Not Significant
+52,gpt-3.5-turbo,RealisticThreat,1.0,Not Significant
+53,gpt-3.5-turbo,SymbolicThreat,0.15988467377392857,Not Significant
+54,gpt-3.5-turbo,Disparagement,1.0,Not Significant
+55,gpt-3.5-turbo,OpportunityHarm,0.042729205065331344,Significant
