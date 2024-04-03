@@ -216,30 +216,54 @@ def plot_heatmaps(df, models, threats, concepts):
     return
 
 
-def plot_heatmaps(df, models, threats, concepts):
-    # Remove the y-axis label and place the color bar beneath the heatmaps
+def plot_heatmaps_side_by_side(df, concept1, concept2, threat_order):
+    models = ['gpt4-preview', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
+              'Llama-2-7b-chat-hf', 'vicuna-13b-v1.5', 'Llama-2-13b-chat-hf']
 
-    # Create a new figure with adjusted size for better fit
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8), sharey=True, gridspec_kw={'width_ratios': [len(race_agg.columns), len(caste_agg.columns)]})
+    sns.set(font_scale=1.2)
+    
+    # Filter the DataFrame for the two given concepts
+    df_concept1 = df[df['concept'] == concept1]
+    df_concept2 = df[df['concept'] == concept2]
 
-    # Create the race heatmap
-    sns.heatmap(race_agg, annot=True, fmt=".2f", cmap='coolwarm', cbar=False, norm=norm, ax=ax1, annot_kws={"size": 14})
-    ax1.set_title('Race')
-    ax1.set_xticklabels(threat_types, rotation=45, ha='right')
+    # Find global min and max for color scale normalization
+    global_min = min(df_concept1[threat_order].min().min(), df_concept2[threat_order].min().min())
+    global_max = max(df_concept1[threat_order].max().max(), df_concept2[threat_order].max().max())
 
-    # Create the caste heatmap
-    sns.heatmap(caste_agg, annot=True, fmt=".2f", cmap='coolwarm', cbar=False, norm=norm, ax=ax2, annot_kws={"size": 14})
-    ax2.set_title('Caste')
-    ax2.set_xticklabels(threat_types, rotation=45, ha='right')
+    # Group and pivot data for both concepts
+    def prepare_data(df_concept):
+        avg_threat_metrics_concept = df_concept.groupby(['model', 'job'])[threat_order].mean().reset_index()
+        heatmap_data_concept = avg_threat_metrics_concept.pivot(index='job', columns='model', values=threat_order)
+        heatmap_data_concept.columns = heatmap_data_concept.columns.reorder_levels([1,0])
+        heatmap_data_concept.sort_index(axis=1, level=0, inplace=True)
+        return heatmap_data_concept
 
-    # Add a color bar at the bottom of the heatmaps
-    cbar_ax = fig.add_axes([0.15, -0.15, 0.7, 0.02])  # x, y, width, height
-    fig.colorbar(ax1.collections[0], cax=cbar_ax, orientation="horizontal")
+    heatmap_data_concept1 = prepare_data(df_concept1)
+    heatmap_data_concept2 = prepare_data(df_concept2)
 
-    # Adjust layout to accommodate the new color bar position
-    plt.subplots_adjust(bottom=0.2)
+    num_models = len(models)
 
-    # Show the plot
+    # Generate side-by-side heatmaps with shared y-axis and single colorbar
+    # fig, axes = plt.subplots(num_models, 2, figsize=(20, num_models * 4), sharey=True)
+    fig, axes = plt.subplots(num_models, 2, figsize=(10, num_models * 2.5), sharey=True, sharex=True)
+    cbar_ax = fig.add_axes([.91, .3, .03, .4])  # Position for the colorbar
+
+    for i, model in enumerate(models):
+        sns.heatmap(heatmap_data_concept1[model].T, ax=axes[i, 0], cmap="coolwarm", vmin=global_min, vmax=global_max, 
+                    cbar=False, annot=True)
+        sns.heatmap(heatmap_data_concept2[model].T, ax=axes[i, 1], cmap="coolwarm", vmin=global_min, vmax=global_max, 
+                    cbar=i == 0, cbar_ax=None if i else cbar_ax, annot=True)
+
+        axes[i, 0].set_ylabel(model)
+        axes[i, 0].set_xlabel('')
+        axes[i, 1].set_xlabel('')
+
+    # Set the xlabel on the last subplot for threat metrics
+    axes[-1, 0].set_xlabel(concept1)
+    axes[-1, 1].set_xlabel(concept2)
+    
+    # Adjust layout for better fit
+    plt.tight_layout(rect=[0, 0, .9, 1])
+
+    # Show the figure
     plt.show()
-
-    return
