@@ -24,8 +24,6 @@ def run_significance(df, metrics):
     p_values_df = pd.DataFrame(p_values_summary)
     p_values_df['Significance'] = ['Significant' if p < 0.05 else 'Not Significant' for p in p_values_df['P-Value']]
 
-    # wide_format_df = p_values_df.pivot('Model', 'Metric', 'P-Value')
-    # formatted_df = wide_format_df.applymap(lambda x: f"**{x:.2e}**" if x < 0.05 else f"{x:.3f}")
 
 
     return p_values_df
