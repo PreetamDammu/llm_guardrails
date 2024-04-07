@@ -46,9 +46,9 @@ def bar_plots(metrics, score_data, x_min=0, x_max=3):
     plt.tight_layout()
     plt.show()
 
-def optimized_bar_plots(metrics, score_data, x_min=0, x_max=3):
+def optimized_bar_plots(metrics, score_data, x_min=0, x_max=3, legendLoc = False):
 
-    model_order = ['gpt4-preview', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
+    model_order = ['gpt-4-turbo', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
                 'Llama-2-7b-chat-hf', 'vicuna-13b-v1.5', 'Llama-2-13b-chat-hf']
     score_data = score_data.set_index('model').loc[model_order].reset_index()
 
@@ -73,8 +73,12 @@ def optimized_bar_plots(metrics, score_data, x_min=0, x_max=3):
         axes[i].set_xlabel('')
         axes[i].set_ylabel('')
 
-        if i < n_rows - 1:
-            axes[i].legend([],[], frameon=False)
+        if not legendLoc:
+            if i < n_rows - 1:
+                axes[i].legend([],[], frameon=False)
+        else:
+            if i != legendLoc:
+                axes[i].legend([],[], frameon=False)
 
         axes[i].grid(which='major', linestyle='--', linewidth='0.5', color='grey')
     
@@ -85,7 +89,7 @@ def optimized_bar_plots(metrics, score_data, x_min=0, x_max=3):
 
 
 def plot_heatmaps_comb(df, threats, concepts):
-    models = ['gpt4-preview', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
+    models = ['gpt-4-turbo', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
                 'Llama-2-7b-chat-hf', 'vicuna-13b-v1.5', 'Llama-2-13b-chat-hf']
 
     global_min = float('inf')
@@ -217,7 +221,7 @@ def plot_heatmaps(df, models, threats, concepts):
 
 
 def plot_heatmaps_side_by_side(df, concept1, concept2, threat_order):
-    models = ['gpt4-preview', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
+    models = ['gpt-4-turbo', 'gpt-3.5-turbo', 'Orca-2-7b', 'mpt-7b-chat', 'vicuna-7b-v1.5', 
               'Llama-2-7b-chat-hf', 'vicuna-13b-v1.5', 'Llama-2-13b-chat-hf']
 
     sns.set(font_scale=1.2)

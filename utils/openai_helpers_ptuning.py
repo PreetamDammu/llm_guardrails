@@ -3,6 +3,7 @@ from openai import AzureOpenAI
 from dotenv import dotenv_values
 
 secrets = dotenv_values(".env")
+
 personal_api_key = secrets['AZURE_OPENAI_KEY']
 azure_endpoint = secrets['AZURE_OPENAI_ENDPOINT']
 
