@@ -37,17 +37,3 @@ def query_evaluator_openai_model(model_name, prompt, temperature=0):
     )
 
     return response.choices[0].message.content
-
-
-# def query_evaluator_openai_model(client, model_name, prompt, temperature=0):
-#     response = client.chat.completions.create(
-#         model=model_name,  # Specify the model, e.g., "gpt-3.5-turbo"
-#         messages=[
-#             {"role": "system", "content": "You are a helpful assistant."},
-#             {"role": "user", "content": prompt}
-#         ],
-#         temperature=temperature,  # Control the randomness of the output
-#         response_format={"type": "json_object"}  # Ensure output is in JSON format
-#     )
-
-#     return response.choices[0].message['content']  # Return the JSON-formatted content

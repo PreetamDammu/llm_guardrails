@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import random
 from tqdm import tqdm
-from datasetGenerator import getDataset
+from utils.dataset_generator import getDataset
 import openai
 
 random.seed(42)
