@@ -1,13 +1,14 @@
 
-# Running LLM Models Locally and with OpenAI API
+# Modeling Covert Harms and Social Threats  (CHAST) in LLM-generated Conversations
 
-This guide provides instructions for running Large Language Models (LLMs) locally and querying OpenAI models (GPT-3.5 and GPT-4). The instructions are designed for environments with at least 16GB GPU memory per GPU, such as a VM with 2 Tesla V100 GPUs (16GB each).
+**Paper Link**: https://aclanthology.org/2024.emnlp-main.1134.pdf
+**Citation**: Dammu, Preetam Prabhu Srikar, et al. "" They are uncultured": Unveiling Covert Harms and Social Threats in LLM Generated Conversations." arXiv preprint arXiv:2405.05378 (2024).
 
 ### **System Requirements**
 - **Driver Version**: 535.129.03
 - **CUDA Version**: 12.2
 - **Python Version**: 3.9
-- **Minimum GPU Memory**: 16GB per GPU (some 13B models may require more depending on context length)
+
 
 ---
 
