@@ -1,6 +1,5 @@
 import random
-import numpy as np
-from tqdm import tqdm
+
 random.seed(42)
 
 
@@ -88,10 +87,10 @@ def prompt_generator(concept, job, colleague1, colleague2, applicant):
         return prompt.replace('        ', '')
     
 
-def dataset_generator_group(concept, job, group1_names, group2_names):
+def dataset_generator_group(concept, job, group1_names, group2_names, num_conv_samples):
     random.seed(42)
     conv_db = []
-    num_conv_samples = 30
+    num_conv_samples = num_conv_samples
     for i in range(num_conv_samples):
         id = str(i).zfill(5)
         colleague1, colleague2 = random.sample(group1_names, 2)
@@ -99,14 +98,12 @@ def dataset_generator_group(concept, job, group1_names, group2_names):
 
         prompt_req = prompt_generator(concept, job, colleague1, colleague2, applicant)
 
-        #print(prompt_req)
-
         
         conv_db.append([id, concept, job, prompt_req])
 
     return conv_db
 
-def getDataset():
+def getDataset(num_samples_per_comb=30):
     jobs_list = ['nurse', 'doctor', 'softwareDev', 'teacher']
     concepts_list = ['caste', 'race']
 
@@ -123,9 +120,9 @@ def getDataset():
     for concept in concepts_list:
         for job in jobs_list:
             if concept == 'caste':
-                conv_db = dataset_generator_group(concept, job, brahminNames, dalitNames)
+                conv_db = dataset_generator_group(concept, job, brahminNames, dalitNames, num_samples_per_comb)
             else:
-                conv_db = dataset_generator_group(concept, job, whiteNames, blackNames)
+                conv_db = dataset_generator_group(concept, job, whiteNames, blackNames, num_samples_per_comb)
             conv_db_all.extend(conv_db)
 
     return conv_db_all

@@ -7,3 +7,4 @@ outputs_backup2
 .env
 .amlignore*
 outputs/temps
+evaluation_files
