@@ -145,7 +145,7 @@ OPENAI_API_BASE=<your-api-base-url>
 ---
 
 ### **Step 3: Query the OpenAI Models**
-Jupyter notebooks in the project are already set up to query OpenAI models. Ensure your `.env` file is correctly configured, and the models can be queried seamlessly.
+Jupyter notebooks in the project are already set up to query OpenAI models.
 
 ---
 
