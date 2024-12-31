@@ -1,64 +1,163 @@
-Running LLM models locally requires at least 16GB GPU memory (some 13b models may require more depending on context length).
-The following commands work well for a VM with 2 GPUs of 16GB each (Tesla V100)
-Driver Version: 535.129.03   CUDA Version: 12.2
 
-NOTE: Steps 1-3 need to be run only once while setting up with environment. If already done, skip to Step 4
+# Running LLM Models Locally and with OpenAI API
 
-Steps to run LLMs locally.
-1) Create and activate a new conda environment to install dependencies
-# conda create -n fc_env python=3.9
-# conda activate fc_env
+This guide provides instructions for running Large Language Models (LLMs) locally and querying OpenAI models (GPT-3.5 and GPT-4). The instructions are designed for environments with at least 16GB GPU memory per GPU, such as a VM with 2 Tesla V100 GPUs (16GB each).
 
-2) Follow instructions to install FastChat (https://github.com/lm-sys/FastChat)
-# pip3 install "fschat[model_worker,webui]"
+### **System Requirements**
+- **Driver Version**: 535.129.03
+- **CUDA Version**: 12.2
+- **Python Version**: 3.9
+- **Minimum GPU Memory**: 16GB per GPU (some 13B models may require more depending on context length)
 
-Cloning the git repo (link: )
+---
 
-3) Install Requirements
-# pip install -r requirements.txt
+## **Table of Contents**
+1. [Setting Up the Environment (Steps 1–4)](#setting-up-the-environment)
+2. [Running LLM Models Locally](#running-llm-models-locally)
+   - [Starting the FastChat Serve Controller](#starting-the-fastchat-serve-controller)
+   - [Running Supported Models](#running-supported-models)
+3. [Querying Local Models](#querying-local-models)
+4. [Running OpenAI Models (GPT-3.5 and GPT-4)](#running-openai-models)
+5. [Notes and Troubleshooting](#notes-and-troubleshooting)
 
+---
 
-4) Activate the conda environment
-# conda activate fc_env
+## **Setting Up the Environment**
 
-Note: Specify a cache location for huggingface if you are running out of space in root directory (Run following commands for socialcompuw Azure account)
-export HF_HOME=/home/azureuser/cloudfiles/code/Users/socialcompuw/huggingface_models/
-export TRANSFORMERS_CACHE=/home/azureuser/cloudfiles/code/Users/socialcompuw/huggingface_models/
+### **Step 1: Create and Activate a Conda Environment**
+Run the following commands to create and activate a Conda environment for dependencies:
 
-5) Steps for FastChat LLM model local run
-    a) Start the serve controller
-    # python3 -m fastchat.serve.controller &
+```bash
+conda create -n fc_env python=3.9
+conda activate fc_env
+```
 
-    b) Pick any one of the models and run the corresponding command
+---
 
-        Vicuna-7b-1.5
-        # python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --num-gpus 2 --max-gpu-memory 14GiB &
+### **Step 2: Install FastChat**
+Follow the [FastChat installation instructions](https://github.com/lm-sys/FastChat), or simply run:
 
-        Vicuna-13b-1.5
-        # python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-13b-v1.5 --num-gpus 2 --max-gpu-memory 14.5GiB &
+```bash
+pip install "fschat[model_worker,webui]"
+```
 
-        Microsoft/Orca-2-7b
-        # python3 -m fastchat.serve.model_worker --model-path Microsoft/Orca-2-7b --num-gpus 2 --max-gpu-memory 14.5GiB &
+---
 
-        mosaicml/mpt-7b-chat
-        # python3 -m fastchat.serve.model_worker --model-path mosaicml/mpt-7b-chat --num-gpus 2 --max-gpu-memory 14.5GiB &
+### **Step 3: Install Additional Requirements**
+Install the dependencies specified in the `requirements.txt` file:
 
-        meta-llama/Llama-2-7b-chat-hf
-        # python3 -m fastchat.serve.model_worker --model-path meta-llama/Llama-2-7b-chat-hf --num-gpus 2 --max-gpu-memory 14.5GiB &
+```bash
+pip install -r requirements.txt
+```
 
-        meta-llama/Llama-2-13b-chat-hf
-        # python3 -m fastchat.serve.model_worker --model-path meta-llama/Llama-2-13b-chat-hf --num-gpus 2 --max-gpu-memory 14.5GiB &
+---
 
-    c) Make the loaded model available for querying at port 8000
-    # python3 -m fastchat.serve.openai_api_server --host localhost --port 8000 &
+### **Step 4: Reactivate the Conda Environment**
+Ensure the Conda environment is active before proceeding:
 
-6) Now, the local models can be queried directly from the .ipynb notebooks
+```bash
+conda activate fc_env
+```
 
+---
 
-For running Openai Models (GPT-3.5 and GPT-4)
-1) Setup Azure Openai environment and deploy models
-Link: https://learn.microsoft.com/en-gb/azure/ai-services/openai/chatgpt-quickstart?tabs=command-line%2Cpython&pivots=programming-language-python
+## **Running LLM Models Locally**
 
-2) Place access credentials in .env file
+### **Step 5a: Start the FastChat Serve Controller**
+Start the FastChat serve controller in the background:
 
-3) Now, the openai model cans be queried directly from the .ipynb notebooks
+```bash
+python -m fastchat.serve.controller &
+```
+
+---
+
+### **Step 5b: Run a Model**
+Choose any of the supported models below and execute the corresponding command. Ensure the `--model-path` points to the correct model directory.
+
+#### Supported Models:
+
+- **Vicuna-7b-1.5**
+  ```bash
+  python -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5 --num-gpus 2 --max-gpu-memory 14GiB &
+  ```
+
+- **Vicuna-13b-1.5**
+  ```bash
+  python -m fastchat.serve.model_worker --model-path lmsys/vicuna-13b-v1.5 --num-gpus 2 --max-gpu-memory 14.5GiB &
+  ```
+
+- **Microsoft/Orca-2-7b**
+  ```bash
+  python -m fastchat.serve.model_worker --model-path Microsoft/Orca-2-7b --num-gpus 2 --max-gpu-memory 14.5GiB &
+  ```
+
+- **mosaicml/mpt-7b-chat**
+  ```bash
+  python -m fastchat.serve.model_worker --model-path mosaicml/mpt-7b-chat --num-gpus 2 --max-gpu-memory 14.5GiB &
+  ```
+
+- **meta-llama/Llama-2-7b-chat-hf**
+  ```bash
+  python -m fastchat.serve.model_worker --model-path meta-llama/Llama-2-7b-chat-hf --num-gpus 2 --max-gpu-memory 14.5GiB &
+  ```
+
+- **meta-llama/Llama-2-13b-chat-hf**
+  ```bash
+  python -m fastchat.serve.model_worker --model-path meta-llama/Llama-2-13b-chat-hf --num-gpus 2 --max-gpu-memory 14.5GiB &
+  ```
+
+---
+
+### **Step 5c: Start the OpenAI API Server**
+Expose the loaded model for querying on port `8000`:
+
+```bash
+python -m fastchat.serve.openai_api_server --host localhost --port 8000 &
+```
+
+---
+
+## **Querying Local Models**
+
+Local models can now be queried directly from Jupyter notebooks located in the `notebooks/` directory. Ensure the notebooks are set up to communicate with the FastChat API on `localhost:8000`.
+
+---
+
+## **Running OpenAI Models**
+
+If you wish to run OpenAI models (GPT-3.5 or GPT-4), follow these steps:
+
+### **Step 1: Set Up Azure OpenAI Environment**
+Deploy the required OpenAI models using Azure. Refer to the [Azure OpenAI Quickstart Guide](https://learn.microsoft.com/en-gb/azure/ai-services/openai/chatgpt-quickstart?tabs=command-line%2Cpython&pivots=programming-language-python).
+
+---
+
+### **Step 2: Store Access Credentials**
+Place your Azure credentials in a `.env` file in the root directory of the project. An example `.env` file format:
+```
+OPENAI_API_KEY=<your-api-key>
+OPENAI_API_BASE=<your-api-base-url>
+```
+
+---
+
+### **Step 3: Query the OpenAI Models**
+Jupyter notebooks in the project are already set up to query OpenAI models. Ensure your `.env` file is correctly configured, and the models can be queried seamlessly.
+
+---
+
+## **Notes and Troubleshooting**
+
+- **First-Time Setup**: Steps 1–3 only need to be completed once while setting up the environment. For subsequent runs, start from Step 4.
+- **GPU Memory Issues**: If a model fails to load due to insufficient GPU memory, adjust the `--max-gpu-memory` parameter.
+- **Azure OpenAI Access**: Ensure your Azure OpenAI deployment has the correct permissions and billing enabled.
+
+---
+
+## **Future Improvements**
+1. Add automated scripts for environment setup and model loading.
+2. Provide pre-configured YAML files for managing model paths and configurations.
+3. Expand support for other LLMs and frameworks.
+
+---
