@@ -2,6 +2,7 @@
 # Modeling Covert Harms and Social Threats  (CHAST) in LLM-generated Conversations
 
 **Paper Link**: https://aclanthology.org/2024.emnlp-main.1134.pdf
+
 **Citation**: Dammu, Preetam Prabhu Srikar, et al. "" They are uncultured": Unveiling Covert Harms and Social Threats in LLM Generated Conversations." arXiv preprint arXiv:2405.05378 (2024).
 
 ### **System Requirements**
