@@ -3,6 +3,8 @@
 
 **Paper Link**: https://aclanthology.org/2024.emnlp-main.1134.pdf
 
+**CHAST LLM Weights**: https://huggingface.co/SocialCompUW/CHAST
+
 **Citation**: Dammu, Preetam Prabhu Srikar, et al. "" They are uncultured": Unveiling Covert Harms and Social Threats in LLM Generated Conversations." arXiv preprint arXiv:2405.05378 (2024).
 
 ### **System Requirements**
